@@ -1,0 +1,160 @@
+# Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+title: "Create a HUB-spoke network in Oracle Cloud Infrastructure"
+stackDescription: ${Messages.solutionsHub.solutions.hubSpoke.stackDescription()}
+schemaVersion: 1.0.0
+version: "20200301"
+locale: "en"
+
+variableGroups:
+- title: ${Messages.solutionsHub.generalConfig()}
+  visible: false
+  variables:
+  - compartment_ocid
+  - tenancy_ocid
+  - region
+  - instance_os
+
+- title: ${Messages.solutionsHub.requiredConfig()}
+  visible: true  
+  variables:
+  - ssh_public_key
+  - igw_display_name
+  - hub_vcn_display_name
+  - hub_vcn_cidr_block
+  - hub_vcn_dns_label
+  - hub_subnet_pub01_display_name
+  - hub_subnet_pub01_cidr_block
+  - spoke01_vcn_display_name
+  - spoke01_vcn_cidr_block
+  - spoke01_vcn_dns_label
+  - spoke01_subnet_priv01_display_name
+  - spoke01_subnet_priv01_cidr_block
+  - spoke02_vcn_display_name
+  - spoke02_vcn_dns_label
+  - spoke02_vcn_cidr_block
+  - spoke02_subnet_priv01_display_name
+  - spoke02_subnet_priv01_cidr_block
+  
+
+- title: ${Messages.solutionsHub.optionalConfig()}
+  visible: true
+  variables:      
+  - linux_os_version
+  - InstanceShape
+
+variables:
+
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: ${Messages.solutionsHub.genericVariables.compartment.title()}
+    description: ${Messages.solutionsHub.genericVariables.compartment.description()}
+
+  region:
+    type: oci:identity:region:name
+    required: true
+    title: ${Messages.solutionsHub.genericVariables.region.title()}
+    description: ${Messages.solutionsHub.genericVariables.region.description()}
+
+  ssh_public_key:
+    type: oci:core:ssh:publickey
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.ssh_public_key.title()}
+
+  igw_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.igw_display_name.title()}
+
+  hub_vcn_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.hub_vcn_cidr_block.title()}
+
+  hub_vcn_dns_label:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.hub_vcn_dns_label.title()}
+
+  hub_vcn_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.hub_vcn_display_name.title()}
+
+  hub_subnet_pub01_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.hub_subnet_pub01_cidr_block.title()}
+
+  hub_subnet_pub01_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.hub_subnet_pub01_display_name.title()}
+
+  spoke01_vcn_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke01_vcn_cidr_block.title()}
+
+  spoke01_vcn_dns_label:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke01_vcn_dns_label.title()}
+
+  spoke01_vcn_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke01_vcn_display_name.title()}
+
+  spoke01_subnet_priv01_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke01_subnet_priv01_cidr_block.title()}
+
+  spoke01_subnet_priv01_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke01_subnet_priv01_display_name.title()}
+
+  spoke02_vcn_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.ssh_public_key.title()}
+
+  spoke02_vcn_dns_label:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke02_vcn_dns_label.title()}
+
+  spoke02_vcn_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke02_vcn_display_name.title()}
+
+  spoke02_subnet_priv01_cidr_block:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke02_subnet_priv01_cidr_block.title()}
+
+  spoke02_subnet_priv01_display_name:
+    type: string
+    required: true
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.spoke02_subnet_priv01_display_name.title()}
+  
+  InstanceShape:
+      type: oci:core:instanceshape:name
+      required: false
+      title: ${Messages.solutionsHub.solutions.hubSpoke.variables.InstanceShape.title()}
+      description: ${Messages.solutionsHub.solutions.hubSpoke.variables.InstanceShape.description()}
+      default: ""
+      dependsOn:
+        compartmentId: compartment_ocid
+
+  instance_os:
+    type: enum
+    title: ${Messages.solutionsHub.solutions.hubSpoke.variables.instance_os.title()}
+    description: ${Messages.solutionsHub.solutions.hubSpoke.variables.instance_os.description()}
+    enum:
+      - "Oracle Linux - Latest Image"
+    required: false
