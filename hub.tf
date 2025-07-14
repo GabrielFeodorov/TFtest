@@ -17,7 +17,7 @@ resource "oci_core_internet_gateway" "hub_internet_gateway" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.hub.id
   enabled        = "true"
-  display_name   = "IGW_HUBB"
+  display_name   = "IGW_HUB"
 }
 
 #Default route table hub
