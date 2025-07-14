@@ -7,7 +7,9 @@ variable "region" {}
 # variable "user_ocid" {}
 #variable "tenancy_ocid" {}
 variable "compartment_ocid" {}
-variable "ssh_public_key" {}
+variable "ssh_public_key" {
+  default = "asd"
+}
 
 variable "igw_display_name" {
   default = "internet-gateway"
